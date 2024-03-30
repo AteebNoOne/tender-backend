@@ -1,0 +1,63 @@
+Arguments: 
+  /usr/local/Cellar/node/19.8.1/bin/node /usr/local/Cellar/yarn/1.22.19/libexec/bin/yarn.js
+
+PATH: 
+  /Users/hammad/.rvm/gems/ruby-2.7.6/bin:/Users/hammad/.rvm/gems/ruby-2.7.6@global/bin:/Users/hammad/.rvm/rubies/ruby-2.7.6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/hammad/.rvm/gems/ruby-2.7.6/bin:/Users/hammad/.rvm/gems/ruby-2.7.6@global/bin:/Users/hammad/.rvm/rubies/ruby-2.7.6/bin:/Users/hammad/Library/Android/sdk/emulator:/Users/hammad/Library/Android/sdk/platform-tools:/usr/local/share/npm/bin:/Users/hammad/.rvm/bin:/Users/hammad/Library/Android/sdk/emulator:/Users/hammad/Library/Android/sdk/platform-tools:/usr/local/share/npm/bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  19.8.1
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: connect EHOSTUNREACH 2606:4700::6810:722:443 - Local (:::57816)
+      at internalConnect (node:net:1081:16)
+      at defaultTriggerAsyncIdScope (node:internal/async_hooks:465:18)
+      at emitLookup (node:net:1357:9)
+      at /usr/local/Cellar/yarn/1.22.19/libexec/lib/cli.js:103587:28
+      at /usr/local/Cellar/yarn/1.22.19/libexec/lib/cli.js:103496:13
+      at module.exports.RawTask.call (/usr/local/Cellar/yarn/1.22.19/libexec/lib/cli.js:79584:19)
+      at flush (/usr/local/Cellar/yarn/1.22.19/libexec/lib/cli.js:79666:29)
+      at processTicksAndRejections (node:internal/process/task_queues:77:11)
+      at runNextTicks (node:internal/process/task_queues:64:3)
+      at process.processImmediate (node:internal/timers:449:9)
+
+npm manifest: 
+  {
+    "name": "tender",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "bcrypt": "^5.1.0",
+      "cloudinary": "^1.37.2",
+      "cookie-parser": "^1.4.6",
+      "cors": "^2.8.5",
+      "dotenv": "^16.3.1",
+      "express": "^4.18.2",
+      "express-fileupload": "^1.4.0",
+      "jsonwebtoken": "^9.0.0",
+      "mongoose": "^7.3.0",
+      "multer": "^1.4.5-lts.1",
+      "nodemailer": "^6.9.3",
+      "nodemon": "^2.0.22",
+      "speakeasy": "^2.0.0",
+      "validator": "^13.9.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
