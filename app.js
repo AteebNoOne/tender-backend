@@ -16,9 +16,9 @@ connectDB();
 paypal.configure({
   mode: "sandbox",
   client_id:
-    "ASQgP6jk4I0Z_KZi7-i27zcbewXEgrzl05qhLd7nqiCHhlakc-gqczOT70Ow-_wcCcM4VcKdEZGwiJT2",
+    "AUX6MO36bdW2FoBN3diBu9q9BtnImbi67mG5ymGcxWwVaeqfuIqv1X50sKr4a71bioe5iTvFT0cEhcHa",
   client_secret:
-    "EFWToq0mqKpz9HkVK_-wp_wsdcLQkh3AzO3QNV8C_LmVVdKEEQBXf9OxxRyrQx-w2GZic7Dg0E17z67s",
+    "EJcnC65qALeD-NIpns3JsgWmqhMcfQKiCr2qCdk3JeCa9kqkfUO_QFwsClCneAxHqM0iRHcSIjxyPdIw",
 });
 
 // Use Middlewares
@@ -44,7 +44,7 @@ app.get("/", (req, res) => res.sendFile(__dirname + "/index.html"));
 
 app.post("/pay", (req, res) => {
   const { itemName, itemPrice, currency } = req.body;
-
+  console.log(itemName, itemPrice, currency)
   const create_payment_json = {
     intent: "sale",
     payer: {
