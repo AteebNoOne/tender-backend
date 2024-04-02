@@ -75,6 +75,18 @@ const venderSchema = new Schema({
       ref: 'User',
     },
   ],
+  address:{
+    type: String,
+    default:null
+  },
+  ratings:[
+    {
+      id:{type:Number},
+      by:{type:String},
+      createdAt:{type:Date},
+      stars:{type:Number}
+    }
+  ]
 });
 
 

@@ -16,9 +16,9 @@ connectDB();
 paypal.configure({
   mode: "sandbox",
   client_id:
-    "ATqtRNT_53lXPvjjJeh85jNGYhDVfaIzWxPZvZiJio6iA7CyYn74PWvctNDwwgda3VQVfDT0UmJy0o6T",
+    "ASQgP6jk4I0Z_KZi7-i27zcbewXEgrzl05qhLd7nqiCHhlakc-gqczOT70Ow-_wcCcM4VcKdEZGwiJT2",
   client_secret:
-    "EFFQ-lydMXHO4rd8HoXwpn7qaVZEr8bv7eR7xZvLucsrFy6iFOTH34GKLyAI1BP7sCy761K234O0zn5f",
+    "EFWToq0mqKpz9HkVK_-wp_wsdcLQkh3AzO3QNV8C_LmVVdKEEQBXf9OxxRyrQx-w2GZic7Dg0E17z67s",
 });
 
 // Use Middlewares

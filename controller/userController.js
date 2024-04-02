@@ -205,6 +205,8 @@ export const createCategory = async (req, res, next) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+
+
 // Get Category
 export const getCategory = async (req, res, next) => {
   try {
