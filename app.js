@@ -43,7 +43,8 @@ app.use("/v1", router);
 app.get("/", (req, res) => res.sendFile(__dirname + "/index.html"));
 
 app.post("/pay", (req, res) => {
-  const { itemName, itemPrice, currency } = req.body;
+  const { itemName, currency } = req.body;
+  const itemPrice = 35;
   console.log(itemName, itemPrice, currency)
   const create_payment_json = {
     intent: "sale",

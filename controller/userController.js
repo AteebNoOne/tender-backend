@@ -87,7 +87,7 @@ export const registerVender = catchAsyncError(async (req, res, next) => {
 // Login User
 export const login = catchAsyncError(async (req, res, next) => {
   const { password, email, type } = req.body;
-  console.log("Data:",req.body)
+  // console.log("Data:",req.body)
   if (!type) return next(new ErrorHandler("Please Add Type", 409));
   if (!password) return next(new ErrorHandler("Please Add Password", 409));
   if (!email) return next(new ErrorHandler("Please Add Email", 409));
@@ -112,7 +112,7 @@ export const login = catchAsyncError(async (req, res, next) => {
 // Forget Password
 export const forgetPassword = catchAsyncError(async (req, res, next) => {
   const { newPassword, email, type } = req.body;
-  console.log(req.body)
+  // console.log(req.body)
   if (!type) return next(new ErrorHandler("Please Add Type", 409));
   if (!newPassword) return next(new ErrorHandler("Please Add Password", 409));
   if (!email) return next(new ErrorHandler("Please Add Email", 409));
