@@ -84,6 +84,31 @@ export const registerVender = catchAsyncError(async (req, res, next) => {
   sendToken(res, vendor, "Vender Register", 201);
 });
 
+
+// Delete User or Vender
+export const deleteUserOrVender = catchAsyncError(async (req, res, next) => {
+  const { _id, type } = req.body;
+
+  console.log("Id and tyype?",_id,type)
+  if (!type || !_id) {
+    return next(new ErrorHandler("Invalid request. Please provide valid _id and type.", 400));
+  }
+
+  try {
+    if (type === 'user') {
+      await User.findOneAndDelete({ _id });
+      res.status(200).json({ success: true, message: 'User deleted successfully.' });
+    } else if (type === 'vendor') {
+      await Vender.findOneAndDelete({ _id });
+      res.status(200).json({ success: true, message: 'Vender deleted successfully.' });
+    } else {
+      return next(new ErrorHandler("Invalid type. Please provide either 'user' or 'vender'.", 400));
+    }
+  } catch (error) {
+    return next(new ErrorHandler("Error deleting user or vender.", 500));
+  }
+});
+
 // Login User
 export const login = catchAsyncError(async (req, res, next) => {
   const { password, email, type } = req.body;
@@ -355,6 +380,10 @@ export const bookVenders = async (req, res, next) => {
 // Book Venders
 export const myBooking = async (req, res, next) => {
   const userId = req.params.id;
+  if(!userId){
+  res.status(404).json({ success: false });
+
+  }
 
   // Fetch bookings associated with the user
   const bookings = await Booking.find({ user: userId }).populate("vendor");
@@ -365,79 +394,59 @@ export const myBooking = async (req, res, next) => {
 // Book Venders
 export const venderBooking = async (req, res, next) => {
   const vendorId = req.params.id;
-
+if(vendorId === "undefined"){
+  console.log("!!",vendorId)
+  res.status(404).json({ success: false });
+}
   // Fetch bookings associated with the vendor
-  const bookings = await Booking.find({ vendor: vendorId }).populate("user");
+  try{
+    const bookings = await Booking.find({ vendor: vendorId }).populate("user");
+    res.status(200).json({ success: true, bookings });
 
-  res.status(200).json({ success: true, bookings });
+  }
+  catch(error){
+    // console.log(error)
+  }
 };
-
-// Like Venders
-export const likeVender = async (req, res, next) => {
+// Toggle Like/Dislike Vendor
+export const toggleLikeVender = async (req, res, next) => {
   const { vendorId } = req.params;
   const { userId } = req.body;
 
   try {
-    // Find the user by ID
+    // Find the vendor by ID
     const vender = await Vender.findById(vendorId);
 
     if (!vender) {
-      return res.status(404).json({ success: false, error: "User not found" });
+      return res.status(404).json({ success: false, error: "Vendor not found" });
     }
 
     // Check if the user has already liked this vendor
-    if (vender.likedVendors.includes(userId)) {
-      return res
-        .status(400)
-        .json({ success: false, error: "User has already liked this vendor" });
+    const hasLiked = vender.likedVendors.includes(userId);
+
+    // console.log("Liked vendors before toggle:", vender.likedVendors);
+
+    if (hasLiked) {
+      // If the user has liked, remove the userId from the likedVendors array
+      vender.likedVendors = vender.likedVendors.filter(id => id.toString() !== userId);
+      // console.log("Liked vendors after unliking:", vender.likedVendors);
+      await vender.save();
+
+      return res.status(200).json({ success: true, message: "Vendor unliked successfully" });
+    } else {
+      // If the user has not liked, add the userId to the likedVendors array
+      vender.likedVendors.push(userId);
+      // console.log("Liked vendors after liking:", vender.likedVendors);
+      await vender.save();
+
+      return res.status(200).json({ success: true, message: "Vendor liked successfully" });
     }
-
-    // Add the vendor to the "likedVendors" array in the user's document
-    vender.likedVendors.push(userId);
-    await vender.save();
-
-    res
-      .status(200)
-      .json({ success: true, message: "Vendor liked successfully" });
   } catch (error) {
-    console.error("Error liking vendor:", error);
+    console.error("Error toggling like for vendor:", error);
     res.status(500).json({ success: false, error: "Internal server error" });
   }
 };
 
-// DisLike Venders
-export const DislikeVender = async (req, res, next) => {
-  const { vendorId } = req.params;
-  const { userId } = req.body;
-
-  try {
-    // Find the user by ID
-    const vender = await Vender.findById(vendorId);
-
-    if (!vender) {
-      return res.status(404).json({ success: false, error: "User not found" });
-    }
-
-    // Check if the user has already disliked this vendor
-    if (vender.dislikedVendors.includes(userId)) {
-      return res.status(400).json({
-        success: false,
-        error: "User has already disliked this vendor",
-      });
-    }
-
-    // Add the vendor to the "dislikedVendors" array in the user's document
-    vender.dislikedVendors.push(userId);
-    await vender.save();
-
-    res
-      .status(200)
-      .json({ success: true, message: "Vendor disliked successfully" });
-  } catch (error) {
-    console.error("Error disliking vendor:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-};
 
 // Update Vender Status
 export const updateVendorStatus = async (req, res, next) => {

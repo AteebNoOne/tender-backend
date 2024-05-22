@@ -1,5 +1,5 @@
 import express from "express";
-import { uploadImage , registerUser, registerVender, login, forgetPassword, createCategory , getCategory, sendEmail, VerifyOtp, uploadVideo, getAllVenders, bookVenders, myBooking, venderBooking, likeVender, DislikeVender, updateVendorStatus, updateUserProfile, getLikedVendors} from "../controller/userController.js";
+import { uploadImage , registerUser, registerVender, login, forgetPassword, createCategory , getCategory, sendEmail, VerifyOtp, uploadVideo, getAllVenders, bookVenders, myBooking, venderBooking, updateVendorStatus, updateUserProfile, getLikedVendors, toggleLikeVender, deleteUserOrVender} from "../controller/userController.js";
 import multer from 'multer';
 const upload = multer({ dest: 'uploads/' });
 
@@ -15,9 +15,8 @@ router.route("/sendEmail").post(sendEmail);
 router.route("/getAllVenders").get(getAllVenders);
 router.route("/verifyOtp").post(VerifyOtp);
 router.route("/myBooking/:id").post(myBooking);
-router.route("/likeVender/:vendorId").post(likeVender);
+router.route("/toggleLikeVender/:vendorId").post(toggleLikeVender);
 router.route("/updateVendorStatus/:vendorId").post(updateVendorStatus);
-router.route("/dislikeVender/:vendorId").post(DislikeVender);
 router.route("/updateUserProfile/:userId").post(updateUserProfile);
 router.route("/updateVendorStatus/:vendorId").post(updateVendorStatus);
 router.route("/venderBooking/:id").post(venderBooking);
@@ -25,6 +24,7 @@ router.route("/bookVenders").post(bookVenders);
 router.route("/uploadImage" , upload.array('avatars')).post(uploadImage);
 router.route("/uploadVideo").post(uploadVideo);
 router.route("/getLikedVendors/:userId").post(getLikedVendors);
+router.route("/deleteUser").post(deleteUserOrVender);
 
 
 export default router;

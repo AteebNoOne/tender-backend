@@ -56,7 +56,8 @@ const venderSchema = new Schema({
     type: String,
   },
   description: {
-    type: String
+    type: String,
+    required: false
   },
   status: {
     type: String,
