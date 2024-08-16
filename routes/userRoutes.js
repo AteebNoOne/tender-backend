@@ -1,9 +1,11 @@
 import express from "express";
-import { uploadImage , registerUser, registerVender, login, forgetPassword, createCategory , getCategory, sendEmail, VerifyOtp, uploadVideo, getAllVenders, bookVenders, myBooking, venderBooking, updateVendorStatus, updateUserProfile, getLikedVendors, toggleLikeVender, deleteUserOrVender} from "../controller/userController.js";
+import { uploadImage , registerUser, registerVender, login, forgetPassword, createCategory , getCategory, sendEmail, VerifyOtp, uploadVideo, getAllVenders, bookVenders, myBooking, venderBooking, updateVendorStatus, updateUserProfile, getLikedVendors, toggleLikeVender, deleteUserOrVender, getVender} from "../controller/userController.js";
 import multer from 'multer';
+import { ServerAndDatabaseHealth } from "./serverController.js";
 const upload = multer({ dest: 'uploads/' });
 
 const router = express.Router();
+router.route("/health").get(ServerAndDatabaseHealth);
 
 router.route("/registerUser").post(registerUser);
 router.route("/registerVender").post(registerVender);
@@ -13,6 +15,7 @@ router.route("/createCategory").post(createCategory);
 router.route("/getCategory").get(getCategory);
 router.route("/sendEmail").post(sendEmail);
 router.route("/getAllVenders").get(getAllVenders);
+router.route("/getVender/:venderId").get(getVender);
 router.route("/verifyOtp").post(VerifyOtp);
 router.route("/myBooking/:id").post(myBooking);
 router.route("/toggleLikeVender/:vendorId").post(toggleLikeVender);
