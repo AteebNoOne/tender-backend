@@ -484,6 +484,7 @@ export const updateUserProfile = async (req, res, next) => {
     // Find the user by ID
     const user = await User.findById(userId);
 
+
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
@@ -513,6 +514,13 @@ export const updateUserProfile = async (req, res, next) => {
       });
   } catch (error) {
     console.error("Error updating user profile:", error);
+  // Convert the error to a string or check the message property
+  if (error.message && error.message.includes("phoneNumber_1 dup key")) {
+    return res.status(400).json({   success: false,message: "Phone number already in use" });
+  }
+  if (error.message && error.message.includes("email_1 dup key")) {
+    return res.status(400).json({   success: false,message: "Email already in use" });
+  }
     return res.status(500).json({ error: "Internal server error" });
   }
 };
@@ -525,7 +533,7 @@ export const updateVendorProfile = async (req, res, next) => {
   try {
     // Find the vendor by ID
     const vendor = await Vender.findById(vendorId); // Replace 'Vender' with your vendor model name
-
+    console.log(vendor)
     if (!vendor) {
       return res.status(404).json({ error: "Vendor not found" });
     }
@@ -561,6 +569,13 @@ export const updateVendorProfile = async (req, res, next) => {
       });
   } catch (error) {
     console.error("Error updating vendor profile:", error);
+  // Convert the error to a string or check the message property
+  if (error.message && error.message.includes("phoneNumber_1 dup key")) {
+    return res.status(400).json({   success: false,message: "Phone number already in use" });
+  }
+  if (error.message && error.message.includes("email_1 dup key")) {
+    return res.status(400).json({   success: false,message: "Email already in use" });
+  }
     return res.status(500).json({ error: "Internal server error" });
   }
 };

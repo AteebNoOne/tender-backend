@@ -1,5 +1,5 @@
 import express from "express";
-import { uploadImage , registerUser, registerVender, login, forgetPassword, createCategory , getCategory, sendEmail, VerifyOtp, uploadVideo, getAllVenders, bookVenders, myBooking, venderBooking, updateVendorStatus, updateUserProfile, getLikedVendors, toggleLikeVender, deleteUserOrVender, getVender} from "../controller/userController.js";
+import { uploadImage , registerUser, registerVender, login, forgetPassword, createCategory , getCategory, sendEmail, VerifyOtp, uploadVideo, getAllVenders, bookVenders, myBooking, venderBooking, updateVendorStatus, updateUserProfile, getLikedVendors, toggleLikeVender, deleteUserOrVender, getVender, updateVendorProfile} from "../controller/userController.js";
 import multer from 'multer';
 import { ServerAndDatabaseHealth } from "./serverController.js";
 const upload = multer({ dest: 'uploads/' });
@@ -21,7 +21,8 @@ router.route("/myBooking/:id").post(myBooking);
 router.route("/toggleLikeVender/:vendorId").post(toggleLikeVender);
 router.route("/updateVendorStatus/:vendorId").post(updateVendorStatus);
 router.route("/updateUserProfile/:userId").post(updateUserProfile);
-router.route("/updateVendorStatus/:vendorId").post(updateVendorStatus);
+router.route("/updateVenderProfile/:vendorId").post(updateVendorProfile);
+
 router.route("/venderBooking/:id").post(venderBooking);
 router.route("/bookVenders").post(bookVenders);
 router.route("/uploadImage" , upload.array('avatars')).post(uploadImage);
