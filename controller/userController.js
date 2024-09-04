@@ -363,7 +363,7 @@ export const getVender = async (req, res, next) => {
 
 // Book Venders
 export const bookVenders = async (req, res, next) => {
-  const { userId, vendorId, service, bookingDate } = req.body;
+  const { userId, vendorId, service, bookingDate,time } = req.body;
 
   const user = await User.findById(userId);
   if (!user) {
@@ -380,8 +380,10 @@ export const bookVenders = async (req, res, next) => {
     vendor: vendorId,
     service,
     bookingDate,
+    time
   });
   await newBooking.save();
+  console.log(newBooking)
   res.status(201).json({ success: true, booking: newBooking });
 };
 
