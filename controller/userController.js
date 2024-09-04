@@ -339,7 +339,15 @@ export const VerifyOtp = async (req, res, next) => {
 // Get All Venders
 export const getAllVenders = async (req, res, next) => {
   try {
-    const vendors = await Vender.find();
+    const vendors = await Vender.find().populate({
+      path: 'ratings',
+      populate: {
+        path: 'userId',
+        model: 'User',
+        select: '-password -__v', // Exclude fields you don't want to return from the user
+      },
+      select: '-venderId -__v', // Exclude venderId and __v from the ratings
+    });
     res.status(200).json({ success: true, vendors });
   } catch (error) {
     console.error(error);
@@ -383,7 +391,6 @@ export const bookVenders = async (req, res, next) => {
     time
   });
   await newBooking.save();
-  console.log(newBooking)
   res.status(201).json({ success: true, booking: newBooking });
 };
 
@@ -396,7 +403,7 @@ export const myBooking = async (req, res, next) => {
   }
 
   // Fetch bookings associated with the user
-  const bookings = await Booking.find({ user: userId }).populate("vendor");
+  const bookings = await Booking.find({ user: userId }).populate("vendor").populate("rating")
 
   res.status(200).json({ success: true, bookings });
 };
@@ -409,7 +416,7 @@ export const venderBooking = async (req, res, next) => {
   }
   // Fetch bookings associated with the vendor
   try {
-    const bookings = await Booking.find({ vendor: vendorId }).populate("user");
+    const bookings = await Booking.find({ vendor: vendorId }).populate("user").populate("rating");
     res.status(200).json({ success: true, bookings });
 
   }
@@ -529,13 +536,12 @@ export const updateUserProfile = async (req, res, next) => {
 
 // Update Vendor Profile
 export const updateVendorProfile = async (req, res, next) => {
-  const { vendorId } = req.params; // Assuming you have a vendor ID parameter
+  const { vendorId } = req.params; 
   const { email, username, phoneNumber, image, description, category } = req.body;
 
   try {
     // Find the vendor by ID
-    const vendor = await Vender.findById(vendorId); // Replace 'Vender' with your vendor model name
-    console.log(vendor)
+    const vendor = await Vender.findById(vendorId); 
     if (!vendor) {
       return res.status(404).json({ error: "Vendor not found" });
     }
@@ -600,6 +606,19 @@ export const getLikedVendors = async (req, res, next) => {
     res.status(200).json({ success: true, data: likedVendors });
   } catch (error) {
     console.error("Error getting liked vendors:", error);
+    res.status(500).json({ success: false, error: "Internal server error" });
+  }
+};
+
+
+// Get All Liked Vendors
+export const deleteAllBookings = async (req, res, next) => {
+  try {
+    const bookings = await Booking.deleteMany();
+
+    res.status(200).json({ success: true, data: bookings });
+  } catch (error) {
+    console.error("Error getting bookings:", error);
     res.status(500).json({ success: false, error: "Internal server error" });
   }
 };

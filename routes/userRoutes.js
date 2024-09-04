@@ -1,7 +1,9 @@
 import express from "express";
-import { uploadImage , registerUser, registerVender, login, forgetPassword, createCategory , getCategory, sendEmail, VerifyOtp, uploadVideo, getAllVenders, bookVenders, myBooking, venderBooking, updateVendorStatus, updateUserProfile, getLikedVendors, toggleLikeVender, deleteUserOrVender, getVender, updateVendorProfile} from "../controller/userController.js";
+import { uploadImage , registerUser, registerVender, login, forgetPassword, createCategory , getCategory, sendEmail, VerifyOtp, uploadVideo, getAllVenders, bookVenders, myBooking, venderBooking, updateVendorStatus, updateUserProfile, getLikedVendors, toggleLikeVender, deleteUserOrVender, getVender, updateVendorProfile, deleteAllBookings} from "../controller/userController.js";
 import multer from 'multer';
 import { ServerAndDatabaseHealth } from "./serverController.js";
+import { createRating, getAllRatings } from "../controller/ratingsController.js";
+import { ChangeBookingStatus } from "../controller/bookingsController.js";
 const upload = multer({ dest: 'uploads/' });
 
 const router = express.Router();
@@ -29,6 +31,12 @@ router.route("/uploadImage" , upload.array('avatars')).post(uploadImage);
 router.route("/uploadVideo").post(uploadVideo);
 router.route("/getLikedVendors/:userId").post(getLikedVendors);
 router.route("/deleteUser").post(deleteUserOrVender);
+
+
+router.route("/admin-bookings").get(deleteAllBookings);
+router.route("/rateBooking").post(createRating);
+router.route("/all-ratings").get(getAllRatings);
+router.route("/change-booking-status").post(ChangeBookingStatus);
 
 
 export default router;

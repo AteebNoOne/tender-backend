@@ -27,9 +27,15 @@ const bookingSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ["pending", "confirmed", "canceled"],
+    enum: ["pending", "confirmed", "canceled","rejected","completed","reviewed"],
     default: "pending",
   },
+  rating: 
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Ratings',
+      
+    },
 });
 
 export const Booking = mongoose.model("Booking", bookingSchema);

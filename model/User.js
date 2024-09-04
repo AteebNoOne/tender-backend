@@ -1,20 +1,9 @@
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import { TOKEN_KEY } from "../config/index.js";
-import bcrypt from "bcrypt";
 
 const Schema = mongoose.Schema;
 
-const GalleryItemSchema = new Schema({
-  publicId: {
-    type: String,
-    required: true,
-  },
-  url: {
-    type: String,
-    required: true,
-  },
-});
 
 const userSchema = new Schema({
   username: {

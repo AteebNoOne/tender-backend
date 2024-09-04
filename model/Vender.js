@@ -4,17 +4,6 @@ import { TOKEN_KEY } from "../config/index.js";
 
 const Schema = mongoose.Schema;
 
-const GalleryItemSchema = new Schema({
-  publicId: {
-    type: String,
-    required: true,
-  },
-  url: {
-    type: String,
-    required: true,
-  },
-});
-
 const venderSchema = new Schema({
   username: {
     type: String,
@@ -37,7 +26,7 @@ const venderSchema = new Schema({
   },
   otp: {
     type: String,
-    
+
   },
   email: {
     type: String,
@@ -76,26 +65,22 @@ const venderSchema = new Schema({
       ref: 'User',
     },
   ],
-  address:{
+  address: {
     type: String,
-    default:null
+    default: null
   },
-  ratings:[
+  ratings: [
     {
-      id:{type:Number},
-      by:{type:String},
-      createdAt:{type:Date},
-      stars:{type:Number}
-    }
-  ]
+      type: Schema.Types.ObjectId,
+      ref: 'Ratings',
+    },
+  ],
 });
-
 
 venderSchema.methods.getJWTToken = function () {
   return jwt.sign({ _id: this._id }, TOKEN_KEY, {
     expiresIn: "15d",
   });
 };
-
 
 export const Vender = mongoose.model("Vender", venderSchema);
